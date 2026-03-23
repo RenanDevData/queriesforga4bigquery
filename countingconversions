@@ -1,0 +1,5 @@
+SELECT 
+  COUNT(DISTINCT CONCAT(user_pseudo_id, CAST((SELECT value.int_value FROM UNNEST(event_params) WHERE key = 'ga_session_id') AS STRING))) AS sessions
+FROM database
+WHERE NET.HOST((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_location')) 
+  IN ()
